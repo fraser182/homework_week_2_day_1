@@ -6,38 +6,49 @@ class SportsTeamTest < MiniTest::Test
 
 
   def setup()
-    @sportsteam = SportsTeam.new("The Coders", ["John", "David", "Mac"], "Mr Jackson", 0)
+    players = ["John", "David", "Mac"]
+    @sportsteam = SportsTeam.new("The Coders", players, "Mr Jackson")
+  end
+  
+
+  def test_get_team_name
+
+    assert_equal("The Coders", @sportsteam.name)
   end
 
+  def test_get_team_players
+    players = @sportsteam.players
+    assert_equal(3, players.count)
 
-    def test_get_team_name
-      assert_equal("The Coders", @sportsteam.team_name())
-    end
+  end
 
-    def test_get_team_players
-      assert_equal(["John", "David", "Mac"], @sportsteam.players())
-    end
+  def test_get_team_coach
+    assert_equal("Mr Jackson", @sportsteam.coach)
+  end
 
-    def test_get_team_coach
-      assert_equal("Mr Jackson", @sportsteam.coach())
-    end
+  def test_set_team_coach
+    @sportsteam.set_coach("Mr Bain")
+    assert_equal("Mr Bain", @sportsteam.coach)
+  end
 
-    def test_set_team_coach
-      @sportsteam.coach = "Mr Bain"
-      assert_equal("Mr Bain", @sportsteam.coach())
-    end
+  def test_add_new_player
+    @sportsteam.add_player("Messi")
+    result = @sportsteam.players  #grab players from team
+    assert_equal(4, result.count)
+  end
 
-    def test_add_new_player
-      @sportsteam.add_new_player("Jen")
-      assert_equal(["John", "David", "Mac", "Jen"], @sportsteam.players())
-    end
+  def test_player_is_in_team
+    result = @sportsteam.is_player_in_team("John")
+    assert_equal(true, result)
+  end
 
-    def test_check_if_player_exists
-      assert_equal(true, @sportsteam.check_if_player_exists("David"))
-    end
+  def test_team_has_points
+    assert_equal(0, @sportsteam.points)
+  end
 
-    def test_result_win
-      assert_equal(2, @sportsteam.team_result("win"))
-    end
+  def test_team_updates_points_for_win
+    @sportsteam.hasWon(true)
+    assert_equal(3, @sportsteam.points)
+  end
 
 end
